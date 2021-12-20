@@ -220,7 +220,7 @@ export default class News extends Component {
     }
 
     async componentDidMount() {
-        let data = await fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=a4d1caf6e9f5491ab8f802243cc59a0b&page=${this.state.page}&pagesize=${this.props.pageSize}`);
+        let data = await fetch(`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=a4d1caf6e9f5491ab8f802243cc59a0b&page=${this.state.page}&pagesize=${this.props.pageSize}`);
         let parseData = await data.json();
         console.log(parseData);
         this.setState({
@@ -231,7 +231,7 @@ export default class News extends Component {
 
     handlePreviuosBtn = async () =>{
         console.log("previous");
-        let data = await fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=a4d1caf6e9f5491ab8f802243cc59a0b&page=${this.state.page-1}&pagesize=${this.props.pageSize}`);
+        let data = await fetch(`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=a4d1caf6e9f5491ab8f802243cc59a0b&page=${this.state.page-1}&pagesize=${this.props.pageSize}`);
         let parseData = await data.json();
         console.log(parseData);
         this.setState({
@@ -241,7 +241,7 @@ export default class News extends Component {
     }
     handleNextBtn = async () =>{
         console.log("Next");
-        let data = await fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=a4d1caf6e9f5491ab8f802243cc59a0b&page=${this.state.page+1}&pagesize=${this.props.pageSize}`);
+        let data = await fetch(`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=a4d1caf6e9f5491ab8f802243cc59a0b&page=${this.state.page+1}&pagesize=${this.props.pageSize}`);
         let parseData = await data.json();
         console.log(parseData);
         this.setState({
@@ -252,6 +252,7 @@ export default class News extends Component {
     render() {
         return (
             <div className='container'>
+                <h1 className='text-center my-3 '>FCJ News</h1>
                 <div className="row">
                     {this.state.article&&this.state.article.map((message) => {
                         return <div className="col-md-4" key={message.url}>
