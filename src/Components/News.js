@@ -214,16 +214,39 @@ export default class News extends Component {
         this.state = {
             article: null,
             loading: false,
-            page : 1
+            page : 1,
+            totalResults : null,
         }
     }
 
     async componentDidMount() {
-        let data = await fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=a4d1caf6e9f5491ab8f802243cc59a0b&page=${this.state.page}`);
+        let data = await fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=a4d1caf6e9f5491ab8f802243cc59a0b&page=${this.state.page}&pagesize=${this.props.pageSize}`);
         let parseData = await data.json();
         console.log(parseData);
         this.setState({
             article: parseData.articles,
+            totalResults : parseData.totalResults
+        });
+    }
+
+    handlePreviuosBtn = async () =>{
+        console.log("previous");
+        let data = await fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=a4d1caf6e9f5491ab8f802243cc59a0b&page=${this.state.page-1}&pagesize=${this.props.pageSize}`);
+        let parseData = await data.json();
+        console.log(parseData);
+        this.setState({
+            article: parseData.articles,
+            page : this.state.page-1,
+        });
+    }
+    handleNextBtn = async () =>{
+        console.log("Next");
+        let data = await fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=a4d1caf6e9f5491ab8f802243cc59a0b&page=${this.state.page+1}&pagesize=${this.props.pageSize}`);
+        let parseData = await data.json();
+        console.log(parseData);
+        this.setState({
+            article: parseData.articles,
+            page : this.state.page+1,
         });
     }
     render() {
@@ -239,10 +262,10 @@ export default class News extends Component {
                 
                 <div className="d-flex bd-highlight mb-3">
                     <div className="p-2 bd-highlight">
-                        <button disabled={!(this.state.page>1)} type="button" className="btn btn-dark"> &larr; Previous</button>
+                        <button disabled={!(this.state.page>1)} type="button" className="btn btn-dark" onClick={this.handlePreviuosBtn} > &larr; Previous</button>
                     </div>
                     <div className="ms-auto p-2 bd-highlight">
-                        <button type="button" className="btn btn-dark">Next &rarr;</button>
+                        <button disabled={(this.state.page>=Math.ceil((this.state.totalResults/this.props.pageSize)))}type="button" className="btn btn-dark" onClick={this.handleNextBtn} >Next &rarr;</button>
                     </div>
                 </div>
             </div>
