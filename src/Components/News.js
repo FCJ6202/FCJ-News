@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
+import Spinner from './Spinner';
 
 export default class News extends Component {
     
@@ -213,7 +214,7 @@ export default class News extends Component {
         super();
         this.state = {
             article: null,
-            loading: false,
+            loading: true,
             page : 1,
             totalResults : null,
         }
@@ -225,7 +226,8 @@ export default class News extends Component {
         console.log(parseData);
         this.setState({
             article: parseData.articles,
-            totalResults : parseData.totalResults
+            totalResults : parseData.totalResults,
+            loading: false,
         });
     }
 
@@ -253,6 +255,7 @@ export default class News extends Component {
         return (
             <div className='container'>
                 <h1 className='text-center my-3 '>FCJ News</h1>
+                {(this.state.loading)?<Spinner/>:null}
                 <div className="row">
                     {this.state.article&&this.state.article.map((message) => {
                         return <div className="col-md-4" key={message.url}>
