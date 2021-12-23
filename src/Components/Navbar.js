@@ -2,6 +2,18 @@ import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 
 export default class Navbar extends Component {
+    constructor(){
+        super();
+        this.state = {
+            text : ""
+        }
+    }
+
+    HandleOnchange = (event) => {
+        this.setState({
+            text : event.target.value,
+        })
+    }
     render() {
         return (
             <div>
@@ -14,19 +26,19 @@ export default class Navbar extends Component {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <Link className="nav-link" aria-current="page" to="/">Home</Link>
+                                    <Link className="nav-link" onClick={this.props.HandleCategory} aria-current="page" to="/">Home</Link>
                                 </li>
-                                <li className="nav-item"><Link className="nav-link" to="/business">Business</Link></li>
-                                <li className="nav-item"><Link className="nav-link" to="/entertainment">Entertainment</Link></li>
-                                <li className="nav-item"><Link className="nav-link" to="/general">General</Link></li>
-                                <li className="nav-item"><Link className="nav-link" to="/health">Health</Link></li>
-                                <li className="nav-item"><Link className="nav-link" to="/science">Science</Link></li>
-                                <li className="nav-item"><Link className="nav-link" to="/sports">Sports</Link></li>
-                                <li className="nav-item"><Link className="nav-link" to="/technology">Technology</Link></li>
+                                <li className="nav-item"><Link className="nav-link" onClick={this.props.HandleCategory} to="/business">Business</Link></li>
+                                <li className="nav-item"><Link className="nav-link" onClick={this.props.HandleCategory} to="/entertainment">Entertainment</Link></li>
+                                <li className="nav-item"><Link className="nav-link" onClick={this.props.HandleCategory} to="/general">General</Link></li>
+                                <li className="nav-item"><Link className="nav-link" onClick={this.props.HandleCategory} to="/health">Health</Link></li>
+                                <li className="nav-item"><Link className="nav-link" onClick={this.props.HandleCategory} to="/science">Science</Link></li>
+                                <li className="nav-item"><Link className="nav-link" onClick={this.props.HandleCategory} to="/sports">Sports</Link></li>
+                                <li className="nav-item"><Link className="nav-link" onClick={this.props.HandleCategory} to="/technology">Technology</Link></li>
                             </ul>
                             <form className="d-flex">
-                                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                <button className="btn btn-outline-success" type="submit">Search</button>
+                                <input className="form-control me-2" value = {this.state.text} onChange={this.HandleOnchange} type="search" placeholder="Search" aria-label="Search" />
+                                <button type = "button" disabled = {this.state.text.length === 0} className="btn btn-outline-success" onClick={()=>this.props.HandleSearchBtn(this.state.text)} required >Search</button>
                             </form>
                         </div>
                     </div>
