@@ -18,13 +18,14 @@ export default class News extends Component {
   Updatedata = async () => {
     let str1 = `everything?q=${this.props.searchStatement}`;
     let str2 = `top-headlines?country=${this.props.country}&category=${this.props.category}`;
-    let url = `https://newsapi.org/v2/${(this.props.query)?str1:str2}&apiKey=47ff20c8f62545a7967f5756e0f98fc9&page=${this.state.page}&pagesize=${this.props.pageSize}`;
-    let data = await fetch(
-      `https://newsapi.org/v2/${(this.props.query)?str1:str2}&apiKey=47ff20c8f62545a7967f5756e0f98fc9&page=${this.state.page}&pagesize=${this.props.pageSize}`
-    );
+    let url = `https://newsapi.org/v2/${(this.props.query)?str1:str2}&apiKey=${this.props.ApiKey}&page=${this.state.page}&pagesize=${this.props.pageSize}`;
+    this.props.progress(10);
+    let data = await fetch(url);
+    this.props.progress(60);
     let parseData = await data.json();
     console.log(this.state.article.length);
     console.log(parseData);
+    this.props.progress(100);
     this.setState({
       article : this.state.article.concat(parseData.articles),
       loading : false,
