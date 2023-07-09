@@ -1,20 +1,12 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 
-export default class Navbar extends Component {
-    constructor(){
-        super();
-        this.state = {
-            text : ""
-        }
-    }
+const Navbar = (props) => {
+    const [text, settext] = useState("")
 
-    HandleOnchange = (event) => {
-        this.setState({
-            text : event.target.value,
-        })
+    const HandleOnchange = (event) => {
+        settext(event.target.value);
     }
-    render() {
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -26,24 +18,25 @@ export default class Navbar extends Component {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <Link className="nav-link" onClick={this.props.HandleCategory} aria-current="page" to="/">Home</Link>
+                                    <Link className="nav-link" onClick={props.HandleCategory} aria-current="page" to="/">Home</Link>
                                 </li>
-                                <li className="nav-item"><Link className="nav-link" onClick={this.props.HandleCategory} to="/business">Business</Link></li>
-                                <li className="nav-item"><Link className="nav-link" onClick={this.props.HandleCategory} to="/entertainment">Entertainment</Link></li>
-                                <li className="nav-item"><Link className="nav-link" onClick={this.props.HandleCategory} to="/general">General</Link></li>
-                                <li className="nav-item"><Link className="nav-link" onClick={this.props.HandleCategory} to="/health">Health</Link></li>
-                                <li className="nav-item"><Link className="nav-link" onClick={this.props.HandleCategory} to="/science">Science</Link></li>
-                                <li className="nav-item"><Link className="nav-link" onClick={this.props.HandleCategory} to="/sports">Sports</Link></li>
-                                <li className="nav-item"><Link className="nav-link" onClick={this.props.HandleCategory} to="/technology">Technology</Link></li>
+                                <li className="nav-item"><Link className="nav-link" onClick={props.HandleCategory} to="/business">Business</Link></li>
+                                <li className="nav-item"><Link className="nav-link" onClick={props.HandleCategory} to="/entertainment">Entertainment</Link></li>
+                                <li className="nav-item"><Link className="nav-link" onClick={props.HandleCategory} to="/general">General</Link></li>
+                                <li className="nav-item"><Link className="nav-link" onClick={props.HandleCategory} to="/health">Health</Link></li>
+                                <li className="nav-item"><Link className="nav-link" onClick={props.HandleCategory} to="/science">Science</Link></li>
+                                <li className="nav-item"><Link className="nav-link" onClick={props.HandleCategory} to="/sports">Sports</Link></li>
+                                <li className="nav-item"><Link className="nav-link" onClick={props.HandleCategory} to="/technology">Technology</Link></li>
                             </ul>
                             <form className="d-flex">
-                                <input className="form-control me-2" value = {this.state.text} onChange={this.HandleOnchange} type="search" placeholder="Search" aria-label="Search" />
-                                <button type = "button" disabled = {this.state.text.length === 0} className="btn btn-outline-success" onClick={()=>this.props.HandleSearchBtn(this.state.text)} required >Search</button>
+                                <input className="form-control me-2" value = {text} onChange={HandleOnchange} type="search" placeholder="Search" aria-label="Search" />
+                                <button type = "button" disabled = {text.length === 0} className="btn btn-outline-success" onClick={()=>props.HandleSearchBtn(text)} required >Search</button>
                             </form>
                         </div>
                     </div>
                 </nav>
             </div>
         )
-    }
 }
+
+export default Navbar;
